@@ -81,6 +81,10 @@ public class Assignment_DirectionAlert : MonoBehaviour
     {
 
         Vector3 toEnemy = enemy.position - transform.position;
+
+        if (toEnemy.magnitude < 0.00000001f)
+            return Direction.None;
+
         Vector3 toEnemyNorm = toEnemy.normalized;
 
         float dot = Vector3.Dot(transform.forward, toEnemyNorm);
