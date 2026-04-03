@@ -5,9 +5,8 @@
 // =============================================================================
 
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
+using UnityEngine;
 
 public class Assignment_DirectionAlert : MonoBehaviour
 {
@@ -81,24 +80,22 @@ public class Assignment_DirectionAlert : MonoBehaviour
     {
 
         Vector3 toEnemy = enemy.position - transform.position;
+        toEnemy.y = 0;
 
-        if (toEnemy.magnitude < 0.00000001f)
+        if (toEnemy.sqrMagnitude < 0.00000001f)
             return Direction.None;
 
         Vector3 toEnemyNorm = toEnemy.normalized;
 
         float dot = Vector3.Dot(transform.forward, toEnemyNorm);
-        
-        toEnemy.y = 0;
-        toEnemyNorm = toEnemy.normalized;
-        float crossY = Vector3.Cross(transform.forward, toEnemyNorm).y;
 
-        if(dot > frontEnd)
+        if (dot > frontEnd)
         {
             return Direction.Front;
         }
         else if (dot > sideEnd)
         {
+            float crossY = Vector3.Cross(transform.forward, toEnemyNorm).y;
             if (crossY > 0)
             {
                 return Direction.Right;
