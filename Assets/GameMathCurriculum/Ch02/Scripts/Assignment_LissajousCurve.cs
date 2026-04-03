@@ -4,32 +4,39 @@
 // 리사주 곡선을 따라 오브젝트를 이동시키는 시스템
 // =============================================================================
 
-using UnityEngine;
-using TMPro;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
 
 public class Assignment_LissajousCurve : MonoBehaviour
 {
     [Header("=== 리사주 곡선 파라미터 ===")]
-    [Tooltip("X축 진폭")] [Range(0.5f, 5f)]
+    [Tooltip("X축 진폭")]
+    [Range(0.5f, 5f)]
     [SerializeField] private float amplitudeX = 2f;
 
-    [Tooltip("Z축 진폭")] [Range(0.5f, 5f)]
+    [Tooltip("Z축 진폭")]
+    [Range(0.5f, 5f)]
     [SerializeField] private float amplitudeZ = 2f;
 
-    [Tooltip("X축 주파수")] [Range(0.1f, 3f)]
+    [Tooltip("X축 주파수")]
+    [Range(0.1f, 3f)]
     [SerializeField] private float frequencyX = 1f;
 
-    [Tooltip("Z축 주파수")] [Range(0.1f, 3f)]
+    [Tooltip("Z축 주파수")]
+    [Range(0.1f, 3f)]
     [SerializeField] private float frequencyZ = 2f;
 
-    [Tooltip("X축 위상 (도, 0~360)")] [Range(0f, 360f)]
+    [Tooltip("X축 위상 (도, 0~360)")]
+    [Range(0f, 360f)]
     [SerializeField] private float phaseX = 0f;
 
-    [Tooltip("Z축 위상 (도, 0~360)")] [Range(0f, 360f)]
+    [Tooltip("Z축 위상 (도, 0~360)")]
+    [Range(0f, 360f)]
     [SerializeField] private float phaseZ = 0f;
 
-    [Tooltip("자취 길이 (이전 위치 개수)")] [Range(10, 200)]
+    [Tooltip("자취 길이 (이전 위치 개수)")]
+    [Range(10, 200)]
     [SerializeField] private int trailLength = 50;
 
     [Header("=== 디버그 정보 (읽기 전용) ===")]
@@ -70,8 +77,14 @@ public class Assignment_LissajousCurve : MonoBehaviour
         //
         // initialPosition을 기준으로 X, Z 오프셋을 더해 최종 위치를 반환하세요.
 
-        // TODO: 위 공식을 구현하세요
-        return initialPosition;
+        float phaseXRad = phaseX * Mathf.Deg2Rad;
+        float phaseZRad = phaseZ * Mathf.Deg2Rad;
+
+        float x = amplitudeX * Mathf.Sin(2 * Mathf.PI * frequencyX * time + phaseXRad);
+        float z = amplitudeZ * Mathf.Sin(2 * Mathf.PI * frequencyZ * time + phaseZRad);
+
+        Vector3 newPos = new Vector3(initialPosition.x + x, initialPosition.y, initialPosition.z + z);
+        return newPos;
     }
 
     private void UpdateDebugUI()
