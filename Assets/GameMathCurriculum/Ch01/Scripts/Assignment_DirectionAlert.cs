@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class Assignment_DirectionAlert : MonoBehaviour
 {
@@ -42,6 +43,9 @@ public class Assignment_DirectionAlert : MonoBehaviour
 
     private GameObject[] allEnemies;
 
+    float frontEnd = Mathf.Cos(45f * Mathf.Deg2Rad);
+    float sideEnd = Mathf.Cos(135f * Mathf.Deg2Rad);
+
     private void Start()
     {
         allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -75,8 +79,35 @@ public class Assignment_DirectionAlert : MonoBehaviour
 
     private Direction GetDirection(Transform enemy)
     {
-        // TODO
-        return Direction.None;
+
+        Vector3 toEnemy = enemy.position - transform.position;
+        Vector3 toEnemyNorm = toEnemy.normalized;
+
+        float dot = Vector3.Dot(transform.forward, toEnemyNorm);
+        
+        toEnemy.y = 0;
+        toEnemyNorm = toEnemy.normalized;
+        float crossY = Vector3.Cross(transform.forward, toEnemyNorm).y;
+
+        if(dot > frontEnd)
+        {
+            return Direction.Front;
+        }
+        else if (dot > sideEnd)
+        {
+            if (crossY > 0)
+            {
+                return Direction.Right;
+            }
+            else
+            {
+                return Direction.Left;
+            }
+        }
+        else
+        {
+            return Direction.Back;
+        }
     }
 
     private void OnDrawGizmos()
