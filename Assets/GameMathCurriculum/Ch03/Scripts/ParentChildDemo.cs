@@ -45,7 +45,6 @@ public class ParentChildDemo : MonoBehaviour
         {
             float deltaRotation = rotationSpeed * Time.deltaTime;
             transform.Rotate(0f, deltaRotation, 0f);
-
         }
 
         unityWorldPos = childObject.position;

@@ -44,8 +44,33 @@ public class Assignment_RotationTrail : MonoBehaviour
 
     private void Update()
     {
-        // TODO
-        
+        float rotation =0f;
+        if (autoRotate)
+        {
+            rotation = rotationSpeed * Time.time;
+        }
+        else
+        {
+            rotation = rotationAngle;
+        }
+
+        var r = Matrix4x4.Rotate(Quaternion.Euler(0f, rotation, 0f));
+        var t = Matrix4x4.Translate(new Vector3(armLength, 0f));
+        var s = Matrix4x4.Scale(Vector3.one);
+
+
+        Matrix4x4 rts = r * t * s;
+        transform.position = rts.MultiplyPoint3x4(Vector3.zero);
+
+        if (lastTipPos != transform.position)
+        {
+            trailPositions.Add(lastTipPos);
+            if(trailPositions.Count > trailLength)
+            {
+                trailPositions.RemoveAt(0);
+            }
+            lastTipPos = transform.position;
+        }
         UpdateUI();
     }
 
