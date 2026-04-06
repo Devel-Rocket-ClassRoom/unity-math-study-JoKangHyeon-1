@@ -52,24 +52,14 @@ public class Assignment_PlanetOrbit : MonoBehaviour
     {
         float rotation = planetOrbitSpeed*Time.time;
 
-        var r = Matrix4x4.Rotate(Quaternion.Euler(0f, rotation, 0f));
-        var t = Matrix4x4.Translate(new Vector3(planetOrbitRadius, 0f));
-        var s = Matrix4x4.Scale(Vector3.one);
-
-        Matrix4x4 rts = r * t  * s;
-
-        planetWorldPos = rts.MultiplyPoint3x4(orbitCenter);
+        var planetOrbitMatrix = Matrix4x4.TRS(orbitCenter, Quaternion.Euler(0f, rotation, 0f), Vector3.one);
+        planetWorldPos = planetOrbitMatrix.MultiplyPoint(new Vector3(planetOrbitRadius, 0f, 0f));
         transform.position = planetWorldPos;
 
         rotation = satelliteOrbitSpeed * Time.time;
-        var rS = Matrix4x4.Rotate(Quaternion.Euler(0f, rotation, 0f));
-        var tS = Matrix4x4.Translate(new Vector3(satelliteOrbitRadius,0f));
-        var sS = Matrix4x4.Scale(Vector3.one);
-        var rtsS = rS * tS * sS;
-
-        satelliteLocalPos = rtsS.MultiplyPoint3x4(Vector3.zero);
-        satelliteWorldPos = transform.position + satelliteLocalPos;
-        satellite.transform.position = satelliteWorldPos;
+        var satliteOrbitMatrix = Matrix4x4.TRS(planetWorldPos, Quaternion.Euler(0f, rotation, 0f), Vector3.one);
+        satelliteWorldPos = satliteOrbitMatrix.MultiplyPoint(new Vector3(satelliteOrbitRadius, 0f, 0f));
+        satellite.position = satelliteWorldPos;
 
         UpdateUI();
     }
