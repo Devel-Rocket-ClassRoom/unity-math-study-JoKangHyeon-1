@@ -92,7 +92,7 @@ public class Assignment_GachaSimulator : MonoBehaviour
 
     private void ExecutePull() 
     {
-        currentEffectiveRate = baseRate + (currentPityCount >= softPityStart ? (1 - baseRate) / (hardPity - softPityStart+2) * (currentPityCount - softPityStart+1) : 0);
+        currentEffectiveRate = baseRate + (currentPityCount >= softPityStart ? (1 - baseRate) / (hardPity - softPityStart+1) * (currentPityCount - softPityStart+1) : 0);
         bool ssrResult = Random.value < currentEffectiveRate;
 
         if (ssrResult)
