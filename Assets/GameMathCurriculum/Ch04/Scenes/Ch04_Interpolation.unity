@@ -755,16 +755,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5884562758504510071, guid: 3d031245b8b68794a8cba52adc655d1a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5884562758504510071, guid: 3d031245b8b68794a8cba52adc655d1a, type: 3}
       propertyPath: easingType
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5884562758504510071, guid: 3d031245b8b68794a8cba52adc655d1a, type: 3}
       propertyPath: uiInfoText
       value: 
       objectReference: {fileID: 1779719301}
+    - target: {fileID: 5884562758504510071, guid: 3d031245b8b68794a8cba52adc655d1a, type: 3}
+      propertyPath: useAnimationCurve
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5884813913331328559, guid: 3d031245b8b68794a8cba52adc655d1a, type: 3}
       propertyPath: target
       value: 
