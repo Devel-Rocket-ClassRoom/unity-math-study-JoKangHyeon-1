@@ -21,7 +21,7 @@ public class Assignment_RotationTrail : MonoBehaviour
 
     [Header("=== 궤적 설정 ===")]
     [Tooltip("기록할 궤적의 최대 길이 (프레임 수)")]
-    [Range(5, 60)]
+    [Range(5, 240)]
     [SerializeField] private int trailLength = 30;
 
     [Tooltip("궤적의 색상")]
@@ -78,7 +78,8 @@ public class Assignment_RotationTrail : MonoBehaviour
             for (int i = 0; i < trailPositions.Count - 1; i++)
             {
                 float alpha = (float)i / trailPositions.Count;
-                Color fadeColor = new Color(trailColor.r, trailColor.g, trailColor.b, alpha);
+                Color fadeColor = Color.HSVToRGB((Time.time + (i)*0.02f) % 1f, 1f, 1f, false);
+                fadeColor.a = alpha;
 
                 Gizmos.color = fadeColor;
                 Gizmos.DrawLine(trailPositions[i], trailPositions[i + 1]);
