@@ -46,7 +46,7 @@ public class Assignment_CircularFormation : MonoBehaviour
         {
             if (units[i] == null) continue;
 
-            Quaternion angle = Quaternion.AngleAxis(360f / currentUnitCount * i, Vector3.up) * leader.rotation;
+            Quaternion angle = Quaternion.AngleAxis(360f / currentUnitCount * i, leader.up) * leader.rotation;
             Vector3 localPos = angle * new Vector3(formationRadius, 0f, 0f);
             units[i].position = leader.position + localPos;
             units[i].rotation = Quaternion.LookRotation(localPos);
