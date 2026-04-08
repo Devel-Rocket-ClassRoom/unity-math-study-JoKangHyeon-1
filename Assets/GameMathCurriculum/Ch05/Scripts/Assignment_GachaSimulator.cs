@@ -76,29 +76,41 @@ public class Assignment_GachaSimulator : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             ExecutePull();
-            UpdateUI();
         }
+            UpdateUI();
     }
 
-    private IEnumerator PerformHardPityPulls()
+    private void PerformHardPityPulls()
     {
-        while (currentPityCount < hardPity-2)
+        while (!ExecutePull())
         {
-            ExecutePull();
-            UpdateUI();
-            yield return new WaitForEndOfFrame();
         }
+            UpdateUI();
     }
 
-    private void ExecutePull() 
+    private bool ExecutePull() 
     {
-        currentEffectiveRate = baseRate + (currentPityCount >= softPityStart ? (1 - baseRate) / (hardPity - softPityStart+1) * (currentPityCount - softPityStart+1) : 0);
+        //currentEffectiveRate = baseRate + (currentPityCount >= softPityStart ? (1 - baseRate) / (hardPity - softPityStart+1) * (currentPityCount - softPityStart+1) : 0);
+
+        if(currentPityCount < softPityStart)
+        {
+            currentEffectiveRate = baseRate;
+        }
+        else if(currentPityCount < hardPity - 1)
+        {
+            float rateIncrease = (1 - baseRate) / (hardPity - softPityStart);
+            currentEffectiveRate = baseRate + (currentPityCount - softPityStart + 1) * rateIncrease;
+        }
+        else
+        {
+            currentEffectiveRate = 1f;
+        }
+
         bool ssrResult = Random.value < currentEffectiveRate;
 
         if (ssrResult)
         {
-            ssrPityList.Add(currentPityCount);
-            pullHistory.Add(true);
+            ssrPityList.Add(currentPityCount+1);
             totalSSRs++;
 
             if (currentPityCount > maxPity)
@@ -110,10 +122,10 @@ public class Assignment_GachaSimulator : MonoBehaviour
         else
         {
             currentPityCount++;
-            pullHistory.Add(false);
         }
 
         totalPulls++;
+        pullHistory.Add(ssrResult);
 
         while (pullHistory.Count > MAX_HISTORY)
         {
@@ -124,6 +136,8 @@ public class Assignment_GachaSimulator : MonoBehaviour
 
             pullHistory.RemoveAt(0);
         }
+
+        return ssrResult;
     }
 
     private void UpdateUI()
