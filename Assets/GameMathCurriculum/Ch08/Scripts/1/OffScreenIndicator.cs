@@ -12,6 +12,8 @@ public class OffScreenIndicator : MonoBehaviour
     List<Image> indicators;
     float screenWidth = 1920;
     float screenHeight = 1080;
+    float arrowSize = 100;
+    float margin = 10;
 
     void Awake()
     {
@@ -41,22 +43,22 @@ public class OffScreenIndicator : MonoBehaviour
 
                 if (viewPort.x < 0)
                 {
-                    indicatorPosition.x = 0;
+                    indicatorPosition.x = arrowSize + margin;
                 }
 
                 if (viewPort.x > 1)
                 {
-                    indicatorPosition.x = screenWidth;
+                    indicatorPosition.x = screenWidth -arrowSize - margin;
                 }
 
                 if (viewPort.y < 0)
                 {
-                    indicatorPosition.y = 0;
+                    indicatorPosition.y = arrowSize + margin;
                 }
 
                 if (viewPort.y > 1)
                 {
-                    indicatorPosition.y = screenHeight;
+                    indicatorPosition.y = screenHeight - arrowSize - margin; ;
                 }
 
 
@@ -68,6 +70,12 @@ public class OffScreenIndicator : MonoBehaviour
 
 
                 indicators[i].transform.position = indicatorPosition;
+
+                Vector3 dirVector = new Vector3(0.5f, 0.5f) - viewPort;
+                dirVector.y = -dirVector.y;
+                float angle = Mathf.Atan2(dirVector.x, dirVector.y);
+                indicators[i].transform.rotation = Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg);
+
                 indicators[i].gameObject.SetActive(true);
             }
             else
