@@ -20,7 +20,7 @@ public class BezierRandomMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             Vector3 dir = endPoint.position - startPoint.position;
             Quaternion q1 = Quaternion.AngleAxis(Random.Range(0, 360), dir);
