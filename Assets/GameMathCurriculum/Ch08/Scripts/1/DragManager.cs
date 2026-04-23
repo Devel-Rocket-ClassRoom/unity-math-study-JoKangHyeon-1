@@ -50,7 +50,7 @@ public class DragManager : MonoBehaviour
             if (Physics.Raycast(ray, out var hit, maxDistance, floorZoneMask))
             {
                 Vector3 targetPos = hit.point;
-                targetPos.y += 1;
+                targetPos.y += 25f;
                 dragTarget.transform.position = targetPos;
             }
         }

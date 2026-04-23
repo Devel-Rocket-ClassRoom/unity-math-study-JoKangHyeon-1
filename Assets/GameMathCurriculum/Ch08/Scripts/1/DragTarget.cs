@@ -12,7 +12,7 @@ public class DragTarget : MonoBehaviour
     {
         terrain = Terrain.activeTerrain;
 
-        float height = terrain.SampleHeight(transform.position)+1f;
+        float height = terrain.SampleHeight(transform.position)+25f;
         transform.position = new Vector3(transform.position.x, height, transform.position.z);
 
         home = transform.position;
@@ -23,7 +23,7 @@ public class DragTarget : MonoBehaviour
         if (returningHome)
         {
             Vector3 nextPosition = Vector3.Lerp(transform.position, home, Time.deltaTime * returnSpeed);
-            nextPosition.y = terrain.SampleHeight(nextPosition)+1f;
+            nextPosition.y = terrain.SampleHeight(nextPosition)+25f;
 
             transform.position =nextPosition;
 
